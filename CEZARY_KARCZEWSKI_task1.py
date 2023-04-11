@@ -84,8 +84,8 @@ model.compile(optimizer=tf.keras.optimizers.experimental.RMSprop(learning_rate=0
 
 model.summary()
 
+# Dataset preparation before training
 AUTOTUNE = tf.data.AUTOTUNE
-
 train_dataset = train_dataset.cache().prefetch(buffer_size=AUTOTUNE)
 val_dataset = val_dataset.cache().prefetch(buffer_size=AUTOTUNE)
 
@@ -96,3 +96,21 @@ history = model.fit(
   validation_data=val_dataset,
   epochs=epochs
 )
+
+# Learning curves charts
+acc = history.history['accuracy']
+loss = history.history['loss']
+
+epochs_range = range(epochs)
+
+plt.figure(figsize=(8, 8))
+plt.subplot(1, 2, 1)
+plt.plot(epochs_range, acc, label='Training Accuracy')
+plt.legend(loc='lower right')
+plt.title('Training Accuracy')
+
+plt.subplot(1, 2, 2)
+plt.plot(epochs_range, loss, label='Training Loss')
+plt.legend(loc='upper right')
+plt.title('Training Loss')
+plt.show()
