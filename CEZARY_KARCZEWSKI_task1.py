@@ -31,3 +31,6 @@ dataset = tf.keras.utils.image_dataset_from_directory(
 )
 class_names = dataset.class_names
 print(class_names)
+
+# Dataset normalization 
+dataset = dataset.map(lambda x, y: (x/255, y))
