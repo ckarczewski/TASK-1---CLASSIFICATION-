@@ -62,3 +62,24 @@ def data_split(dataset,
     return train_dataset, val_dataset, test_dataset
 
 train_dataset, val_dataset, test_dataset = data_split(dataset=dataset)
+
+# Build model
+num_classes = 4
+model = keras.Sequential([
+    data_augmentation,
+    tf.keras.layers.Conv2D(32, 3, activation='relu'),
+    tf.keras.layers.MaxPooling2D(),
+    tf.keras.layers.Conv2D(64, 3, activation='relu'),
+    tf.keras.layers.MaxPooling2D(),
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dense(num_classes),
+    keras.layers.Dropout(rate=0.2)
+])
+
+# Compile model
+model.compile(optimizer=tf.keras.optimizers.experimental.RMSprop(learning_rate=0.0001),
+              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+              metrics=['accuracy'])
+
+model.summary()
