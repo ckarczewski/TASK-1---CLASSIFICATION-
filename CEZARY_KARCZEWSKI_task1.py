@@ -83,3 +83,16 @@ model.compile(optimizer=tf.keras.optimizers.experimental.RMSprop(learning_rate=0
               metrics=['accuracy'])
 
 model.summary()
+
+AUTOTUNE = tf.data.AUTOTUNE
+
+train_dataset = train_dataset.cache().prefetch(buffer_size=AUTOTUNE)
+val_dataset = val_dataset.cache().prefetch(buffer_size=AUTOTUNE)
+
+# Train
+epochs=10
+history = model.fit(
+  train_dataset,
+  validation_data=val_dataset,
+  epochs=epochs
+)
