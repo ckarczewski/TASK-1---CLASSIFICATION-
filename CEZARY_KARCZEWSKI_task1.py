@@ -133,3 +133,22 @@ r=re.result().numpy()
 a=acc.result().numpy()
 f1_score = 2 * (p * r) / (p + r)
 print(f"Precision: {pre.result().numpy()}, Recall: {re.result().numpy()}, Accuracy: {acc.result().numpy()}, f1-score: {f1_score}")
+
+# Presentation of 10 random results on the chart
+for batch in test_dataset.as_numpy_iterator(): 
+    img, true_label = batch
+    break
+
+y_pred = model.predict(img)
+
+for i in range(10):
+    plt.subplot(2,5,i+1)
+    
+    pred_label = np.argmax(y_pred[i])
+    
+    plt.imshow(img[i], cmap=plt.cm.binary)
+    plt.xlabel(f"True label: {class_names[true_label[i]]} \n Pred label: {class_names[pred_label]}")
+    plt.tight_layout(pad=1.5)
+    
+plt.show()
+
