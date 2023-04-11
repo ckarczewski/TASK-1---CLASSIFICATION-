@@ -34,3 +34,8 @@ print(class_names)
 
 # Dataset normalization 
 dataset = dataset.map(lambda x, y: (x/255, y))
+
+# Augmentation layer 
+data_augmentation = keras.Sequential([
+    layers.RandomFlip("horizontal", input_shape=(300,300,3))
+])
