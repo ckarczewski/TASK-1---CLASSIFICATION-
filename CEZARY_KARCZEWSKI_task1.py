@@ -152,3 +152,8 @@ for i in range(10):
     
 plt.show()
 
+# Save model to file 
+model.save(os.path.join('models','imageclassifier.h5'))
+new_model = tf.keras.models.load_model('models/imageclassifier.h5')
+
+new_model.summary()
