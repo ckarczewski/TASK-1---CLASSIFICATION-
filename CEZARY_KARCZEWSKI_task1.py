@@ -114,3 +114,22 @@ plt.plot(epochs_range, loss, label='Training Loss')
 plt.legend(loc='upper right')
 plt.title('Training Loss')
 plt.show()
+
+# Testing the model on test data, calculating precision, recall, accuracy, f1-score
+pre = Precision()
+re = Recall()
+acc = Accuracy()
+
+for batch in test_dataset.as_numpy_iterator(): 
+    X, y = batch
+    y_pred = model.predict(X)
+    pred_array = [np.argmax(y_pred[pred]) for pred in range(len(y_pred))]
+    acc.update_state(y,pred_array)
+    pre.update_state(y, pred_array)
+    re.update_state(y, pred_array)
+    
+p=pre.result().numpy()
+r=re.result().numpy()
+a=acc.result().numpy()
+f1_score = 2 * (p * r) / (p + r)
+print(f"Precision: {pre.result().numpy()}, Recall: {re.result().numpy()}, Accuracy: {acc.result().numpy()}, f1-score: {f1_score}")
